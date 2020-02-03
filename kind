@@ -1,0 +1,20 @@
+#!/bin/bash
+
+SERVICENAME="kind"
+IMAGENAME="kind-client"
+
+#printf "[apnex/${IMAGENAME}] stopping\n" 1>&2
+docker rm -f "${SERVICENAME}" >/dev/null 2>&1
+
+# remove dangling image
+docker rm -v $(docker ps -qa -f name="${SERVICENAME}" -f status=exited) 2>/dev/null
+
+function startkind {
+	docker run -t \
+	--privileged \
+	--name=${SERVICENAME} \
+	-v /var/run/docker.sock:/var/run/docker.sock \
+	apnex/${IMAGENAME} "${@}"
+}
+
+startkind "${@}"
