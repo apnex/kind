@@ -1,0 +1,32 @@
+To install the Go tools, type on a terminal:
+
+$ sudo dnf install golang
+The go and gofmt binaries will become available on the system.
+
+Go code lives in a workspace which is defined by the GOPATH environment variable. A common choice among developers, and the default value of GOPATH starting from the Go 1.8 release, is to use $HOME/go:
+
+```
+mkdir -p $HOME/go
+echo 'export GOPATH=$HOME/go' >> $HOME/.bashrc
+source $HOME/.bashrc
+```
+Check that GOPATH is set correctly with this command:
+
+$ go env GOPATH
+/home/user/go
+
+## ensure latest version of kubectl
+https://kubernetes.io/docs/tasks/tools/install-kubectl/#before-you-begin
+
+### kubectl autocompletion
+kubectl completion bash >/etc/bash_completion.d/kubectl
+
+### kind autocompletion
+kind completion bash >/etc/bash_completion.d/kind
+
+## Create cluster
+kind create cluster --name="kind" --config cluster.yaml
+
+## Configure kubeconfig
+export KUBECONFIG="$(kind get kubeconfig-path --name="kind")"
+kubectl cluster-info

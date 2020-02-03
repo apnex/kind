@@ -1,0 +1,7 @@
+FROM alpine
+RUN apk add --no-cache \
+	docker \
+	curl
+RUN curl -Lo /usr/local/bin/kind https://github.com/kubernetes-sigs/kind/releases/download/v0.5.1/kind-$(uname)-amd64 && \
+	chmod +x /usr/local/bin/kind
+
