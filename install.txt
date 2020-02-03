@@ -15,14 +15,20 @@ Check that GOPATH is set correctly with this command:
 $ go env GOPATH
 /home/user/go
 
-## ensure latest version of kubectl
+### ensure latest version of kubectl
 https://kubernetes.io/docs/tasks/tools/install-kubectl/#before-you-begin
+
+### install bash-completion
+yum -y bash-completion
 
 ### kubectl autocompletion
 kubectl completion bash >/etc/bash_completion.d/kubectl
 
 ### kind autocompletion
-kind completion bash >/etc/bash_completion.d/kind
+kind completion bash | tr -d '\r' >/etc/bash_completion.d/kind
+
+### refresh shell
+exec bash
 
 ## Create cluster
 kind create cluster --name="kind" --config cluster.yaml
