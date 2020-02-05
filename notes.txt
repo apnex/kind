@@ -1,0 +1,46 @@
+## set hostname
+hostnamectl set-hostname web01
+exec bash
+
+## install epel-release
+yum -y install epel-release
+
+## install pre-requisites
+yum -y install \
+	bash-completion \
+	git \
+	jq
+
+## clone control-plane
+git clone https://github.com/apnex/control-plane
+
+## install docker
+./iptables.flush.sh
+./docker.install.sh
+
+## clone kind
+git clone http://github.com/apnex/kind
+
+## install kubectl
+./kubectl.install.sh
+
+### kubectl autocompletion
+kubectl completion bash >/etc/bash_completion.d/kubectl
+
+### install kind
+./kind.install.sh
+
+### kind autocompletion
+kind completion bash | tr -d '\r' >/etc/bash_completion.d/kind
+
+### refresh shell
+exec bash
+
+## create cluster
+kind create cluster
+
+## get/set kubeconfig
+kind get kubeconfig > kubeconfig
+
+## how to permanent set?
+export KUBECONFIG=${PWD}/kubeconfig
