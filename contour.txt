@@ -1,0 +1,3 @@
+### git clone
+git clone https://github.com/projectcontour
+kubectl apply -f contour/examples/contour
